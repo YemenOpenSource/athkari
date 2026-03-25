@@ -60,46 +60,18 @@ export function activate(context: vscode.ExtensionContext) {
 
   startInterval(); // Start the first interval on extension activation
 
-  // when user press ( Shift + Alt + P ) and enter command ( athkari ) the below options will be shown ..
+  // Register the main command – shown when user presses Ctrl+Shift+P and types "athkari"
   const disposable = vscode.commands.registerCommand(
     "athkari.athkari",
     async () => {
       const selection = await vscode.window.showQuickPick(
-        ["تعديل الوقت", "إضافة ذكر جديد", "تحديث"],
+        ["إضافة ذكر جديد", "تعديل ذكر", "حذف ذكر", "تعديل الوقت", "تحديث"],
         {
-          placeHolder: "اختر من القائمة",
-        }
+          placeHolder: "اختر من القائمة",
+        },
       );
 
-      // Edit showing new thiker time ..
-      if (selection === "تعديل الوقت") {
-        const inputTime = await vscode.window.showInputBox({
-          placeHolder: "أدخل التوقيت الجديد هنا...",
-          prompt:
-            "أدخل عدد الدقائق التي ترغب أن يظهر فيها ذكر جديد تلقائيًا. مثال: إذا أدخلت 30، سيظهر ذكر كل 30 دقيقة.",
-        });
-
-        if (inputTime !== undefined) {
-          const parsedTime = parseInt(inputTime, 10);
-          if (!isNaN(parsedTime)) {
-            newTime = parsedTime;
-            time = newTime * 60000; // Update the interval time
-            clearInterval(interval); // Clear the old interval
-            startInterval(); // Start new interval with updated time
-
-            // Save time to globalState
-            context.globalState.update("AdkharIntervalMinutes", newTime);
-
-            vscode.window.showInformationMessage(
-              `✅ تم تعديل الوقت إلى ${newTime} دقيقة`
-            );
-          } else {
-            vscode.window.showErrorMessage("❌ الرجاء إدخال رقم صحيح.");
-          }
-        }
-      }
-
-      // Add new dhikr to the list ..
+      // ── Add a new Thikr ──
       if (selection === "إضافة ذكر جديد") {
         const newDhikr = await vscode.window.showInputBox({
           placeHolder: "أدخل الذكر الجديد هنا...",
@@ -108,19 +80,101 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (newDhikr) {
           ListOfAdkhar.push(newDhikr);
-          saveAdkhar(); // حفظ الأذكار بعد الإضافة
+          saveAdkhar();
           vscode.window.showInformationMessage(
-            `✅ تم إضافة الذكر الجديد: "${newDhikr}"`
+            `✅ تم إضافة الذكر الجديد: "${newDhikr}"`,
           );
         }
       }
 
-      // Re
-      if (selection === "تحديث") {
-        vscode.window.showInformationMessage("تم التحديث بنجاح");
-        vscode.window.showInformationMessage("أهلاً بك في أذكاري");
+      // ── Edit an existing Thikr ──
+      else if (selection === "تعديل ذكر") {
+        if (ListOfAdkhar.length === 0) {
+          vscode.window.showWarningMessage("⚠️ لا توجد أذكار لتعديلها.");
+          return;
+        }
+
+        const picked = await vscode.window.showQuickPick(ListOfAdkhar, {
+          placeHolder: "اختر الذكر الذي تريد تعديله",
+        });
+
+        if (picked) {
+          const updated = await vscode.window.showInputBox({
+            value: picked,
+            prompt: "عدّل النص ثم اضغط Enter للحفظ",
+          });
+
+          if (updated && updated !== picked) {
+            const index = ListOfAdkhar.indexOf(picked);
+            if (index !== -1) {
+              ListOfAdkhar[index] = updated;
+              saveAdkhar();
+              vscode.window.showInformationMessage(`✅ تم تعديل الذكر بنجاح`);
+            }
+          }
+        }
       }
-    }
+
+      // ── Delete a Thikr ──
+      else if (selection === "حذف ذكر") {
+        if (ListOfAdkhar.length === 0) {
+          vscode.window.showWarningMessage("⚠️ لا توجد أذكار لحذفها.");
+          return;
+        }
+
+        const picked = await vscode.window.showQuickPick(ListOfAdkhar, {
+          placeHolder: "اختر الذكر الذي تريد حذفه",
+        });
+
+        if (picked) {
+          const confirm = await vscode.window.showQuickPick(["نعم", "لا"], {
+            placeHolder: `هل أنت متأكد من حذف: "${picked}"؟`,
+          });
+
+          if (confirm === "نعم") {
+            const index = ListOfAdkhar.indexOf(picked);
+            if (index !== -1) {
+              ListOfAdkhar.splice(index, 1);
+              saveAdkhar();
+              vscode.window.showInformationMessage("✅ تم حذف الذكر بنجاح");
+            }
+          }
+        }
+      }
+
+      // ── Edit reminder interval ──
+      else if (selection === "تعديل الوقت") {
+        const inputTime = await vscode.window.showInputBox({
+          placeHolder: "أدخل التوقيت الجديد هنا...",
+          prompt:
+            "أدخل عدد الدقائق التي ترغب أن يظهر فيها ذكر جديد تلقائيًا. مثال: إذا أدخلت 30، سيظهر ذكر كل 30 دقيقة.",
+        });
+
+        if (inputTime !== undefined) {
+          const parsedTime = parseInt(inputTime, 10);
+          if (!isNaN(parsedTime) && parsedTime > 0) {
+            newTime = parsedTime;
+            time = newTime * 60000;
+            clearInterval(interval);
+            startInterval();
+            context.globalState.update("AdkharIntervalMinutes", newTime);
+            vscode.window.showInformationMessage(
+              `✅ تم تعديل الوقت إلى ${newTime} دقيقة`,
+            );
+          } else {
+            vscode.window.showErrorMessage(
+              "❌ الرجاء إدخال رقم صحيح أكبر من صفر.",
+            );
+          }
+        }
+      }
+
+      // ── Refresh ──
+      else if (selection === "تحديث") {
+        vscode.window.showInformationMessage("🔄 تم التحديث بنجاح");
+        vscode.window.showInformationMessage("أهلاً بك في أذكاري 🌿");
+      }
+    },
   );
 
   context.subscriptions.push(disposable);

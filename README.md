@@ -1,157 +1,83 @@
 # 🌿 Athkari – Islamic Reminders for VS Code
 
-**Athkari** is a lightweight and inspiring **VS Code extension** that displays Islamic reminders (Athkar) while you work, helping you stay mindful and spiritually connected during your coding sessions.
+**Athkari** is a lightweight VS Code extension that displays Islamic Athkar (remembrances of Allah) while you code, helping you stay spiritually connected throughout your workday.
 
 ---
 
 ## ✨ Features
 
-✅ Displays random Islamic Athkar periodically inside VS Code  
-✅ Allows users to add new Athkar manually and save them for future use  
-✅ Sends a notification with a random Thikr every **30 minutes**  
-✅ Allows users to **customize the time interval** for reminders  
-✅ Provides **interactive commands** to manage Athkar easily  
-✅ Shows a welcome message: **"بسم الله الرحمن الرحيم"** on startup
+- 🕌 Shows **"بسم الله الرحمن الرحيم"** on startup
+- 🔔 Sends a random Thikr notification every **30 minutes** (customizable)
+- ➕ **Add** new Athkar to your personal list
+- ✏️ **Edit** any existing Thikr
+- 🗑️ **Delete** Athkar you no longer need
+- ⏱️ **Change the reminder interval** to any number of minutes
+- 🔄 **Refresh** to restart reminders and see the welcome message again
+- 💾 All changes are **saved persistently** across sessions
 
 ---
 
-## ⚙️ How It Works
+## 🛠 How to Use
 
-- Once VS Code starts, the extension displays the message:
+Open the **Command Palette**:
 
-> **بسم الله الرحمن الرحيم**
-
-- Every **30 minutes**, a random Thikr appears as a reminder.
-- You can change the time of for appears Thikr.
-- You can **add new Athkar** anytime using the Command Palette.
-- You can **refresh** the Athkar list to display new content instantly.
-
----
-
-## 🛠 Commands
-
-Open the Command Palette using:
-
-```bash
+```
 Ctrl + Shift + P
 ```
 
-Then type:
-
-```bash
-Athkari
-```
-
-### Available Commands:
-
-➡️ Add a new Thikr manually and save it.
-
-```bash
-Athkari: إضافة ذكر جديد
-```
-
-➡️ Change the time and save it.
-
-```bash
-Athkari: تعديل الوقت
-```
-
-➡️ Refresh Athkar and display the welcome message.
-
-```bash
-Athkari: Refresh
-```
+Type **`athkari`** and press Enter. A menu will appear with the following options:
 
 ---
 
-## 🌙 Benefits
+### ➕ Add a New Thikr
 
-- Helps maintain **spiritual awareness** during long coding sessions
-- Encourages **consistent Dhikr**
-- Simple, lightweight, and distraction-free
+1. Select **"إضافة ذكر جديد"** from the menu
+2. Type the new Thikr text in the input box
+3. Press **Enter** to save it
+
+The new Thikr will be added to your list and may appear in future reminders.
 
 ---
 
-## ❤️ Contribute
+### ✏️ Edit an Existing Thikr
+
+1. Select **"تعديل ذكر"** from the menu
+2. A list of all your current Athkar will appear — pick the one you want to edit
+3. The selected text will appear in an input box — modify it as needed
+4. Press **Enter** to save the updated text
+
+---
+
+### 🗑️ Delete a Thikr
+
+1. Select **"حذف ذكر"** from the menu
+2. A list of all your current Athkar will appear — pick the one you want to delete
+3. A confirmation prompt will ask **"نعم"** (Yes) or **"لا"** (No)
+4. Select **"نعم"** to confirm deletion
+
+---
+
+### ⏱️ Change Reminder Interval
+
+1. Select **"تعديل الوقت"** from the menu
+2. Enter the number of minutes between reminders (e.g., `15` for every 15 minutes)
+3. Press **Enter** to apply
+
+The new interval is saved and will persist across VS Code restarts.
+
+---
+
+### 🔄 Refresh
+
+1. Select **"تحديث"** from the menu
+2. The extension will show a welcome message confirming the refresh
+
+---
+
+## ❤️ Contributing
 
 Contributions, suggestions, and improvements are always welcome!
 
 ---
 
-# 🚀 Athkari – أذكار إسلامية داخل VS Code
-
-**Athkari** هو امتداد بسيط ومفيد لمطوري VS Code، يعرض أذكارًا إسلامية ملهمة أثناء العمل، مما يساعد على الذكر والتأمل خلال جلسات البرمجة.
-
----
-
-## ✨ المميزات
-
-✅ عرض أذكار تلقائيًا داخل VS Code  
-✅ إمكانية إضافة أذكار جديدة وحفظها  
-✅ تنبيه المستخدم بذكر كل **30 دقيقة**  
-✅ إمكانية تعديل مدة ظهور الأذكار  
-✅ أوامر تفاعلية لإدارة الأذكار  
-✅ عرض رسالة **"بسم الله الرحمن الرحيم"** عند بدء التشغيل
-
----
-
-## ⚙️ كيف يعمل؟
-
-- عند تشغيل VS Code تظهر رسالة:
-
-> **بسم الله الرحمن الرحيم**
-
-- كل **30 دقيقة** يظهر ذكر بشكل تلقائي.
-- يمكنك تغيير وقت ظهور الأذكار.
-- يمكنك إضافة أذكار جديدة يدويًا.
-- يمكنك تحديث الأذكار فورًا.
-
----
-
-## 🛠 الأوامر
-
-لفتح لوحة الأوامر:
-
-```bash
-Ctrl + Shift + P
-```
-
-ثم اكتب:
-
-```bash
-Athkari
-```
-
-### الأوامر المتاحة:
-
-➡️ لإضافة ذكر جديد وحفظه.
-
-```bash
-Athkari: إضافة ذكر جديد
-```
-
-➡️ لتعديل الوقت وحفظه.
-
-```bash
-Athkari: تعديل الوقت
-```
-
-➡️ لتحديث الأذكار وعرض رسالة الترحيب.
-
-```bash
-Athkari: Refresh
-```
-
----
-
-## 🌙 الفائدة
-
-- الحفاظ على الذكر أثناء البرمجة
-- زيادة الطمأنينة والتركيز
-- امتداد خفيف ولا يسبب إزعاج
-
----
-
-## ❤️ المساهمة
-
-نرحب بجميع الاقتراحات والمساهمات لتطوير الامتداد.
+Made by **Ammar Almansouri** to help developers remember Allah while coding.
